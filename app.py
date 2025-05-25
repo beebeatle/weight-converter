@@ -40,6 +40,11 @@ def index():
 def dashboard():
     return render_template('dashboard.html')
 
+# Ensure we don't have duplicate routes
+@app.route('/index')
+def index_redirect():
+    return redirect(url_for('index'))
+
 @app.route('/users')
 @login_required
 def users():
