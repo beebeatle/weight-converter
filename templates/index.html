@@ -20,6 +20,16 @@
 <body>
     <div class="container">
         <h1 class="text-center mb-4">Weight Converter</h1>
+{% if current_user.is_authenticated %}
+    <div class="alert alert-info">
+        Logged in as: {{ current_user.username }}
+        <a href="{{ url_for('dashboard') }}" class="btn btn-link">Go to Dashboard</a>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        Not logged in. <a href="{{ url_for('login') }}">Login</a> or <a href="{{ url_for('register') }}">Register</a> to access additional features.
+    </div>
+{% endif %}
         
         <div class="card">
             <div class="card-body">
