@@ -1,9 +1,2 @@
 type: web
 startCommand: gunicorn app:app
-env:
-  - key: FLASK_ENV
-    value: production
-  - key: DATABASE_URL
-    value: sqlite://
-  - key: SECRET_KEY
-    value: your-secret-key-here
