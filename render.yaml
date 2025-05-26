@@ -1,2 +1,7 @@
 type: web
 startCommand: gunicorn app:app
+env:
+  - key: DATABASE_URL
+    value: postgresql://localhost/weight_converter
+  - key: SECRET_KEY
+    value: your-secret-key-here
