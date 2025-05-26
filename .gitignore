@@ -1,7 +1,14 @@
 __pycache__/
 *.pyc
 venv/
-env/
+.env
+.env.local
+*.env.*
+!.env.example
+!.env.production
+!.env.development
+instance/
+site.db/
 .env
 .DS_Store
 *.log

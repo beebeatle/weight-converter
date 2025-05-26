@@ -6,8 +6,8 @@ from models import db, User
 from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-here'  # Change this in production
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'  # Use in-memory database for Heroku
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-here')  # Change this in production
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://localhost/weight_converter')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -18,11 +18,13 @@ with app.app_context():
     db.drop_all()
     # Create new tables
     db.create_all()
-    # Create a default admin user
-    admin = User(username='admin', email='admin@example.com', is_admin=True)
-    admin.set_password('admin123')
-    db.session.add(admin)
-    db.session.commit()
+    # Create a default admin user if it doesn't exist
+    admin = User.query.filter_by(username='admin').first()
+    if not admin:
+        admin = User(username='admin', email='admin@example.com', is_admin=True)
+        admin.set_password('admin123')
+        db.session.add(admin)
+        db.session.commit()
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
